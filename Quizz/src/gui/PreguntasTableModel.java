@@ -42,8 +42,8 @@ public class PreguntasTableModel extends AbstractTableModel{
         switch (columnIndex){
             case 0:
                 //System.out.println("entre");
-                this.con++;
-                return this.con;
+
+                return rowIndex+1;
             case 1:
                 return a.getPregunta();
             case 2:

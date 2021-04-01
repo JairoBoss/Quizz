@@ -1,5 +1,8 @@
 package gui;
 
+import model.Pregunta;
+import model.Respuesta;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,7 +34,7 @@ public class DialogoPreguntas extends JDialog {
 
 
     private JComboBox cbbMateria;
-    private String[] materias;
+    private String[] materia;
     private JLabel lblMaterias;
 
 
@@ -39,7 +42,7 @@ public class DialogoPreguntas extends JDialog {
     private JButton btnCancelar;
 
 
-    public DialogoPreguntas(JFrame parent) {
+    public DialogoPreguntas(JFrame parent, String[] materias) {
         super(parent, "Nueva pregunta", true);
         super.setSize(282, 364);
         super.setLocationRelativeTo(parent);
@@ -67,7 +70,7 @@ public class DialogoPreguntas extends JDialog {
         cbbRespuestaCorrecta.setSelectedIndex(-1);
 
 
-        materias = new String[]{"INVESTIGACION DE OPERACIONES", "ECUACIONES DIFERENCIALES", "PROGRAMACION"};
+
         cbbMateria = new JComboBox(materias);
         cbbMateria.setSelectedIndex(-1);
         lblMaterias = new JLabel("Selecciona la materia");
@@ -76,7 +79,36 @@ public class DialogoPreguntas extends JDialog {
         btnAceptar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                listener.aceptarButtonClick();
+                if (txtPrgunta.getText().isEmpty() || txtRespuesta1.getText().isEmpty() || txtRespuesta2.getText().isEmpty() || txtRespuesta3.getText().isEmpty() ||  txtRespuesta4.getText().isEmpty() || (cbbRespuestaCorrecta.getSelectedIndex() == -1 ) || (cbbMateria.getSelectedIndex() == -1)){
+                    JOptionPane.showMessageDialog(parent,"Dejaste un campo vacio","Error",JOptionPane.ERROR_MESSAGE);
+                }else{
+                    //PREGUNTA
+                    Pregunta aux = new Pregunta(txtPrgunta.getText(), (String) cbbMateria.getSelectedItem());
+                    //Insisos
+                    Respuesta uno = new Respuesta(txtRespuesta1.getText(),false);
+                    Respuesta dos = new Respuesta(txtRespuesta2.getText(),false);
+                    Respuesta tres = new Respuesta(txtRespuesta3.getText(),false);
+                    Respuesta cuatro = new Respuesta(txtRespuesta4.getText(),false);
+
+
+
+                    switch (cbbRespuestaCorrecta.getSelectedIndex()){
+                        case 0:
+                            uno = new Respuesta(txtRespuesta1.getText(),true);
+                            break;
+                        case 1:
+                            dos = new Respuesta(txtRespuesta2.getText(),true);
+                            break;
+                        case 2:
+                            tres = new Respuesta(txtRespuesta3.getText(),true);
+                            break;
+                        case 3:
+                            cuatro = new Respuesta(txtRespuesta4.getText(),true);
+                            break;
+                    }
+
+                    listener.aceptarButtonClick(aux, uno , dos, tres, cuatro);
+                }
             }
         });
 
@@ -111,6 +143,7 @@ public class DialogoPreguntas extends JDialog {
 
         super.add(btnAceptar);
         super.add(btnCancelar);
+
     }
 
     public void setListener(DialogoPreguntasListener listener) {
@@ -122,6 +155,9 @@ public class DialogoPreguntas extends JDialog {
         txtRespuesta2.setText("");
         txtRespuesta3.setText("");
         txtRespuesta4.setText("");
+        txtPrgunta.setText("");
+        cbbRespuestaCorrecta.setSelectedIndex(-1);
+        cbbMateria.setSelectedIndex(-1);
 
     }
 }

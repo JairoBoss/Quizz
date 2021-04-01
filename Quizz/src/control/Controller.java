@@ -103,4 +103,21 @@ public class Controller implements Serializable{
     public Pregunta getPregunta(int inx){
         return quiz.get(inx);
     }
+
+    public void guardar(){
+
+    }
+
+    public void cargar(){
+
+    }
+
+    public void filtrar(String Materia){
+
+     //   a
+    }
+
+    public void eliminarPregunta(int noPregunta){
+
+    }
 }

@@ -37,11 +37,25 @@ public class PrincipalFrame extends JFrame {
         super.setSize(500, 300);
         super.setLayout(new BorderLayout());
         super.setLocationRelativeTo(null);
+        String[] res = {
+                "ESPAÑOL", "MATEMATICAS", "GEOGRAFIA", "HISTORIA", "PROGRAMACION"
+        };
 
-        dlgPreguntas = new DialogoPreguntas(this);
+        dlgPreguntas = new DialogoPreguntas(this, res);
         dlgPreguntas.setListener(new DialogoPreguntasListener() {
             @Override
-            public void aceptarButtonClick() {
+            public void aceptarButtonClick(Pregunta pregunta, Respuesta uno, Respuesta dos, Respuesta tres, Respuesta cuatro) {
+
+                control.addPregunta(pregunta);
+                control.inciso(control.getPreguntas().size() -1,uno);
+                control.inciso(control.getPreguntas().size() -1,dos);
+                control.inciso(control.getPreguntas().size() -1,tres);
+                control.inciso(control.getPreguntas().size() -1,cuatro);
+
+
+
+                modelPreguntas.fireTableDataChanged();
+                dlgPreguntas.setVisible(false);
                 dlgPreguntas.clean();
             }
 
@@ -109,9 +123,7 @@ public class PrincipalFrame extends JFrame {
         control.inciso(3, new Respuesta("Si", false));
         control.inciso(3, new Respuesta("Espacio reservado en la memoria", true));
 
-        String[] res = {
-          "ESPAÑOL", "MATEMATICAS", "GEOGRAFIA", "HISTORIA", "PROGRAMACION"
-        };
+
         answer = new RespuestasComboBox(res);
 
         modelPreguntas = new PreguntasTableModel(control);
