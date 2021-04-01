@@ -21,7 +21,9 @@ import javax.swing.*;
  */
 public class PrincipalFrame extends JFrame {
 
-    MenuBar baresito;
+    private MenuBar baresito;
+
+    private DialogoPreguntas dlgPreguntas;
 
     private JTable tblPreguntas;
     private Controller control;
@@ -36,25 +38,63 @@ public class PrincipalFrame extends JFrame {
         super.setLayout(new BorderLayout());
         super.setLocationRelativeTo(null);
 
+        dlgPreguntas = new DialogoPreguntas(this);
+        dlgPreguntas.setListener(new DialogoPreguntasListener() {
+            @Override
+            public void aceptarButtonClick() {
+                dlgPreguntas.clean();
+            }
+
+            @Override
+            public void cancelarButtonClick() {
+                dlgPreguntas.clean();
+                dlgPreguntas.setVisible(false);
+            }
+        });
+
         baresito = new MenuBar();
+        baresito.setListener(new MenuListener() {
+            @Override
+            public void nuevaPreguntaButtonClick() {
+                System.out.println("Nueva pregunta");
+                dlgPreguntas.setVisible(true);
+            }
+
+            @Override
+            public void guardarButtonClick() {
+                System.out.println("Guardar");
+            }
+
+            @Override
+            public void salirButtonClick() {
+                System.exit(0);
+
+                System.out.println("Saliendo ...");
+            }
+
+            @Override
+            public void acercaDeButtonClick() {
+                System.out.println("Acerca de ....");
+            }
+        });
 
         control = new Controller();
 
-        control.addPregunta(new Pregunta("¿Cual es la capital de wakanda?", Materia.GEOGRAFIA));
+        control.addPregunta(new Pregunta("¿Cual es la capital de wakanda?", "GEOGRAFIA"));
 
         control.inciso(0, new Respuesta("Wakanda", false));
         control.inciso(0, new Respuesta("Oaxaca", false));
         control.inciso(0, new Respuesta("No tiene capital", false));
         control.inciso(0, new Respuesta("Birnin Zana", true));
 
-        control.addPregunta(new Pregunta("Cuanto es 1 + 1", Materia.MATEMATICAS));
+        control.addPregunta(new Pregunta("Cuanto es 1 + 1", "MATEMATICAS"));
 
         control.inciso(1, new Respuesta("2", true));
         control.inciso(1, new Respuesta("6548", false));
         control.inciso(1, new Respuesta("963", false));
         control.inciso(1, new Respuesta("741", false));
 
-       control.addPregunta(new Pregunta("Quien descubrio america?", Materia.HISTORIA));
+       control.addPregunta(new Pregunta("Quien descubrio america?", "HISTORIA"));
 
         control.inciso(2, new Respuesta("6548", false));
         control.inciso(2, new Respuesta("963", false));
@@ -62,7 +102,7 @@ public class PrincipalFrame extends JFrame {
         control.inciso(2, new Respuesta("741", false));
 
 
-        control.addPregunta(new Pregunta("Que es una variable?", Materia.PROGRAMACION));
+        control.addPregunta(new Pregunta("Que es una variable?", "PROGRAMACION"));
 
         control.inciso(3, new Respuesta("UwU", false));
         control.inciso(3, new Respuesta("No", false));

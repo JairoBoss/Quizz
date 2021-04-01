@@ -16,18 +16,18 @@ public class Pregunta {
     private ArrayList<Respuesta> respuestas;
     private Integer contador;
 
-    private Materia materia;
+    private String materia;
 
 
 
-    public Pregunta(String pregunta, Materia materia) {
+    public Pregunta(String pregunta, String materia) {
         this.pregunta = pregunta;
         this.respuestas = new ArrayList<Respuesta>();
         this.contador = 0;
         this.materia = materia;
     }
 
-    public Materia getMateria(){
+    public String getMateria(){
         return this.materia;
     }
 

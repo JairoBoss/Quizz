@@ -14,6 +14,7 @@ public class MenuBar extends JMenuBar {
     JMenuItem miGuardar;
     JMenuItem miSalir;
     JMenuItem miAcercaDe;
+    private MenuListener listener;
 
     public MenuBar(){
 
@@ -21,19 +22,44 @@ public class MenuBar extends JMenuBar {
         mmAyuda = new JMenu("Ayuda");
 
         miNuevaPregunta = new JMenuItem("Nueva pregunta");
-        miSalir = new JMenuItem("Salir");
+        miNuevaPregunta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                listener.nuevaPreguntaButtonClick();
+            }
+        });
+
         miGuardar = new JMenuItem("Guardar");
+        miGuardar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                listener.guardarButtonClick();
+            }
+        });
+
+        miSalir = new JMenuItem("Salir");
+        miSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                listener.salirButtonClick();
+            }
+        });
+
 
         miAcercaDe = new JMenuItem("Acerca de..");
+        miAcercaDe.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                listener.acercaDeButtonClick();
+            }
+        });
+
 
         mmPreguntas.add(miNuevaPregunta);
-        /*miNuevaPregunta.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-            }
-        });*/
+
         mmPreguntas.add(miGuardar);
+
         mmPreguntas.add(new JSeparator());
         mmPreguntas.add(miSalir);
 
@@ -45,4 +71,9 @@ public class MenuBar extends JMenuBar {
 
 
     }
+
+    public void setListener(MenuListener listener) {
+        this.listener = listener;
+    }
+
 }
