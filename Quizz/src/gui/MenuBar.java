@@ -1,5 +1,8 @@
 package gui;
 
+import exepciones.ArchivoInvalidoExeption;
+import exepciones.CargarArchivoExption;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +15,9 @@ public class MenuBar extends JMenuBar {
 
     JMenuItem miNuevaPregunta;
     JMenuItem miGuardar;
+    JMenuItem miEliminarPregunta;
     JMenuItem miSalir;
+
     JMenuItem miAcercaDe;
     private MenuListener listener;
 
@@ -33,7 +38,21 @@ public class MenuBar extends JMenuBar {
         miGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                listener.guardarButtonClick();
+                try {
+                    listener.guardarButtonClick();
+                } catch (ArchivoInvalidoExeption archivoInvalidoExeption) {
+                    archivoInvalidoExeption.printStackTrace();
+                } catch (CargarArchivoExption cargarArchivoExption) {
+                    cargarArchivoExption.printStackTrace();
+                }
+            }
+        });
+
+        miEliminarPregunta = new JMenuItem("Eliminar Pregunta");
+        miEliminarPregunta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                listener.eliminarButtonClick();
             }
         });
 
@@ -59,7 +78,7 @@ public class MenuBar extends JMenuBar {
 
 
         mmPreguntas.add(miGuardar);
-
+        mmPreguntas.add(miEliminarPregunta);
         mmPreguntas.add(new JSeparator());
         mmPreguntas.add(miSalir);
 

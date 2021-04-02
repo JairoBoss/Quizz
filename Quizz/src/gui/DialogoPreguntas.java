@@ -158,6 +158,5 @@ public class DialogoPreguntas extends JDialog {
         txtPrgunta.setText("");
         cbbRespuestaCorrecta.setSelectedIndex(-1);
         cbbMateria.setSelectedIndex(-1);
-
     }
 }
