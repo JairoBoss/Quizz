@@ -9,22 +9,22 @@ package exepciones;
  *
  * @author megabit
  */
-public class CargarArchivoExption extends Exception {
+public class GuardarArchivoExeption extends Exception {
 
     /**
-     * Creates a new instance of <code>CargarArchivoExption</code> without
+     * Creates a new instance of <code>GuardarArchivoExeption</code> without
      * detail message.
      */
-    public CargarArchivoExption() {
+    public GuardarArchivoExeption() {
     }
 
     /**
-     * Constructs an instance of <code>CargarArchivoExption</code> with the
+     * Constructs an instance of <code>GuardarArchivoExeption</code> with the
      * specified detail message.
      *
      * @param msg the detail message.
      */
-    public CargarArchivoExption(String msg) {
+    public GuardarArchivoExeption(String msg) {
         super(msg);
     }
 }

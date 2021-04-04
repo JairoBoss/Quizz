@@ -5,15 +5,16 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author jairo
  */
-public class Pregunta {
+public class Pregunta implements Serializable {
     private String pregunta;
-    private ArrayList<Respuesta> respuestas;
+    private Respuesta[] respuestas;
     private Integer contador;
 
     private String materia;
@@ -22,7 +23,7 @@ public class Pregunta {
 
     public Pregunta(String pregunta, String materia) {
         this.pregunta = pregunta;
-        this.respuestas = new ArrayList<Respuesta>();
+        this.respuestas = new Respuesta[4];
         this.contador = 0;
         this.materia = materia;
     }
@@ -33,7 +34,7 @@ public class Pregunta {
 
     public void setRespuesta(Respuesta x){
         if (contador < 4) {
-            this.respuestas.add(x);
+            this.respuestas[contador] = x;
         }
         this.contador++;
     }
@@ -43,18 +44,18 @@ public class Pregunta {
     }
     
     public Boolean valor(int x){
-        return this.respuestas.get(x).getCalificacion();        
+        return this.respuestas[x].getCalificacion();        
     }
 
     @Override
     public String toString() {
         return String.format("%s      "
-                + " [0]%s, [1] %s, [2] %s, [3]%s",getPregunta(),this.respuestas.get(0).getRespuesta(),this.respuestas.get(1).getRespuesta(),this.respuestas.get(2).getRespuesta(),this.respuestas.get(3).getRespuesta());
+                + " [0]%s, [1] %s, [2] %s, [3]%s",getPregunta(),this.respuestas[0].getRespuesta(),this.respuestas[1].getRespuesta(),this.respuestas[2].getRespuesta(),this.respuestas[3].getRespuesta());
     }
 
     
     public String respuesta(int x){
-        return respuestas.get(x).getRespuesta();
+        return respuestas[x].getRespuesta();
     }
 
     /*public String[] getRespuestas(){
@@ -63,17 +64,17 @@ public class Pregunta {
         return respuestas;
     }*/
 
-    public ArrayList<Respuesta> answers(){
+    public Respuesta[] answers(){
         return this.respuestas;
     }
 
     public String getCorrecta(){
 
         String correcta = "";
-        for (int i = 0; i < respuestas.size(); i++) {
+        for (int i = 0; i < respuestas.length; i++) {
 
-            if (respuestas.get(i).getCalificacion() == true){
-                correcta = respuestas.get(i).getRespuesta();
+            if (respuestas[i].getCalificacion() == true){
+                correcta = respuestas[i].getRespuesta();
             }
 
         }

@@ -17,17 +17,18 @@ import javax.swing.table.AbstractTableModel;
 public class PreguntasTableModel extends AbstractTableModel{
     
     private Controller oControl;
-    private Integer con;
+    
     
     public PreguntasTableModel(Controller a){
-        this.oControl = a;
-        this.con = 0;
+        oControl = a;
+        
 
     }        
 
     @Override
     public int getRowCount() {
-        return this.oControl.numeroDePreguntas();
+        return this.oControl.noPreguntas();
+        //return  1;
     }
 
     @Override

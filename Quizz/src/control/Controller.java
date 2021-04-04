@@ -27,10 +27,8 @@ public class Controller implements Serializable {
 
 
     public Controller() throws ArchivoInvalidoExeption, CargarArchivoExption {
-        sc = new Scanner(System.in);
-        //this.quiz = new ArrayList<Pregunta>();
-
         cargar();
+        sc = new Scanner(System.in);
 
         this.correctas = 0;
     }
@@ -49,7 +47,7 @@ public class Controller implements Serializable {
         this.quiz.set(noPregunta, x);
     }
 
-    public Integer noPreguntas() {
+    public int noPreguntas() {        
         return quiz.size();
     }
 
@@ -95,11 +93,11 @@ public class Controller implements Serializable {
 
     public String[] respuestasString(int indice) {
 
-        String[] respuestas = new String[quiz.get(indice).answers().size()];
+        String[] respuestas = new String[quiz.get(indice).answers().length];
 
         for (int i = 0; i < respuestas.length; i++) {
 
-            respuestas[i] = String.valueOf(quiz.get(indice).answers().get(i).getRespuesta());
+            respuestas[i] = String.valueOf(quiz.get(indice).answers()[i].getRespuesta());
             //System.out.println(respuestas[i]);
         }
 
@@ -181,6 +179,3 @@ public class Controller implements Serializable {
         return resultado;
     }
 }
-
-
-

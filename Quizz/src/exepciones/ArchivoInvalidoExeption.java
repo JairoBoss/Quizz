@@ -1,5 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package exepciones;
 
+/**
+ *
+ * @author megabit
+ */
 public class ArchivoInvalidoExeption extends Exception {
 
     /**
@@ -15,8 +24,7 @@ public class ArchivoInvalidoExeption extends Exception {
      *
      * @param msg the detail message.
      */
-    public ArchivoInvalidoExeption(String msg) throws ArchivoInvalidoExeption, CargarArchivoExption {
+    public ArchivoInvalidoExeption(String msg) {
         super(msg);
-
     }
 }
