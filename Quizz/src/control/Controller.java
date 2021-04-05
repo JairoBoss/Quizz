@@ -149,20 +149,15 @@ public class Controller implements Serializable {
         }
 
     }
-
-    public void filtrar(String Materia) {
-
-        //   a
-    }
-
+    
     public String eliminarPregunta(String noPregunta) {
         String x;
         int pregunta = Integer.parseInt(noPregunta)-1 ;
-        if ( pregunta <= quiz.size()){
-            x = String.format("Vas a eliminar la siguiente pregunta %s" , quiz.get(pregunta ).getPregunta());
-            quiz.remove(pregunta);
-        }else{
+        if ( pregunta >= quiz.size() || pregunta <= 0){
             x = "Esa pregunta no existe :(";
+        }else{
+            x = String.format("Acabas de eliminar la siguiente pregunta %s" , quiz.get(pregunta ).getPregunta());
+            quiz.remove(pregunta);
         }
 
         return x;
@@ -177,5 +172,26 @@ public class Controller implements Serializable {
             resultado = false;
         }
         return resultado;
+    }
+
+    public ArrayList<Pregunta> filtrar(String materia){
+        ArrayList<Pregunta> filtrados = new ArrayList<>();
+
+        for (Pregunta aux : quiz) {
+            if (aux.getMateria().equals(materia)){
+                filtrados.add(aux);
+            }
+        }
+
+        for (int i = 0; i < filtrados.size(); i++) {
+            System.out.println(filtrados.get(i).getPregunta());
+        }
+
+        return filtrados;
+    }
+
+    public void cast(ArrayList a){
+        this.quiz = a;
+
     }
 }
