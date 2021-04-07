@@ -22,23 +22,13 @@ import model.Respuesta;
 public class Controller implements Serializable {
 
     private ArrayList<Pregunta> quiz;
-    private Integer correctas;
-    private Scanner sc;
-
 
     public Controller() throws ArchivoInvalidoExeption, CargarArchivoExption {
         cargar();
-        sc = new Scanner(System.in);
-
-        this.correctas = 0;
     }
 
     public void addPregunta(Pregunta x) {
         this.quiz.add(x);
-    }
-
-    public Integer getCorrectas() {
-        return correctas;
     }
 
     public void inciso(int noPregunta, Respuesta respuesta) {
@@ -51,40 +41,10 @@ public class Controller implements Serializable {
         return quiz.size();
     }
 
-
-    public void contestar() {
-        for (int i = 0; i < quiz.size(); i++) {
-            Pregunta a = this.quiz.get(i);
-            System.out.println(a.toString());
-
-            System.out.println("Selecciona el inciso correcto");
-            int x = sc.nextInt();
-            if (a.valor(x)) {
-                System.out.println("nais");
-                this.correctas++;
-            } else {
-                System.out.println("bad");
-            }
-
-        }
-    }
-
-    public Integer correctas() {
-        return this.correctas;
-    }
-
-    public Integer numeroDePreguntas() {
-        return this.quiz.size();
-    }
-
     public ArrayList<Pregunta> getPreguntas() {
 
         return quiz;
     }
-    
-    /*public String getPregunta(int inx){
-        return quiz.get(inx).getPregunta();
-    }*/
 
     public String respuesta(int noPregunta, int respuesta) {
         return quiz.get(noPregunta).respuesta(respuesta);
@@ -161,17 +121,6 @@ public class Controller implements Serializable {
         }
 
         return x;
-    }
-    private Boolean validar(String numero){
-        Boolean resultado;
-
-        try {
-            Integer.parseInt(numero);
-            resultado = true;
-        }catch (NumberFormatException ex){
-            resultado = false;
-        }
-        return resultado;
     }
 
     public ArrayList<Pregunta> filtrar(String materia){
