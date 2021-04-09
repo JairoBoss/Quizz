@@ -65,8 +65,22 @@ public class Controller implements Serializable {
     }
 
 
+
     public Pregunta getPregunta(int inx) {
-        return quiz.get(inx);
+        //System.out.println("Pregunta no "+inx);
+        Pregunta aux = new Pregunta("","");
+
+        if (inx < noPreguntas()){
+            aux = quiz.get(inx);
+        }else{
+            System.out.println("Fin del examen");
+            aux = null;
+        }
+
+        //return inx<=noPreguntas() ? quiz.get(inx) : null ;
+
+        return aux;
+
     }
 
     public void guardar() throws CargarArchivoExption, ArchivoInvalidoExeption {

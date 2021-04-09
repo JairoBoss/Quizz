@@ -4,12 +4,11 @@ import exepciones.ArchivoInvalidoExeption;
 import exepciones.CargarArchivoExption;
 import model.Pregunta;
 
-public class ControllerAlumno extends Controller{
+public class ControllerAlumno extends Controller {
 
     private Integer respuestasCorrectas;
     private Double calificacion;
     private Integer contador;
-
 
     public ControllerAlumno() throws ArchivoInvalidoExeption, CargarArchivoExption {
         this.respuestasCorrectas = 0;
@@ -18,16 +17,49 @@ public class ControllerAlumno extends Controller{
     }
 
 
-    private void setCalificacion(){
-        this.calificacion = Double.valueOf(this.respuestasCorrectas/10);
+    public Pregunta obtenerPregunta() {
+        Pregunta aux = this.getPregunta(this.contador);
+        this.contador++;
+        //return aux;
+
+        return contador <= noPreguntas() ? aux : null;
     }
 
-    public Pregunta obtenerPregunta(){
-        //Pregunta aux = new Pregunta("Cuanto es 2 + 2","Geo");
-        Pregunta aux  = this.getPregunta(contador);
-        //aux = this.getPregunta(contador);
-        this.contador++;
-        return aux;
+    public Integer getRespuestasCorrectas(){
+        return this.respuestasCorrectas;
     }
+
+
+    public Double getCalificacion() {
+
+        this.calificacion = ((double) this.respuestasCorrectas / noPreguntas()) * 100;
+        return this.calificacion;
+
+    }
+
+
+    private Integer preguntasContador = 0;
+
+    public void checar(int x) {
+        if (x != -1) {
+            if (getPregunta(preguntasContador).valor(x)) {
+                this.respuestasCorrectas++;
+            }
+        }
+
+
+        preguntasContador++;
+    }
+
+    public void Calificacion(int x) {
+        System.out.println(this.getPregunta(contador).valor(x));
+    }
+
+
+    public void checar() {
+
+    }
+
+
     //size noPreguntas
 }

@@ -1,68 +1,132 @@
 package guiAlumno;
 
-
-import control.Controller;
 import control.ControllerAlumno;
-import exepciones.ArchivoInvalidoExeption;
-import exepciones.CargarArchivoExption;
+import exepciones.*;
 import model.Pregunta;
-import model.Respuesta;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
 
+    private Integer respuestaSeleccionada = -1;
     private PanelPreguntas pnlPreguntas;
     private PanelContador pnlContador;
-    private PanelInferior panelInferior;
+    private PanelInferior pnlInferior;
     private ControllerAlumno oControl;
+    private ArrayList<Integer> respuestas;
+    private CalificacionDialog calificacionDialog;
 
-    public MainFrame() throws CargarArchivoExption, ArchivoInvalidoExeption {
-
-
+    public MainFrame(){
         super("EXAMEN");
-
-        Pregunta a = new Pregunta("Cuanto es 2 + 2","Geo");
-        a.setRespuesta(new Respuesta("1",false));
-        a.setRespuesta(new Respuesta("2",false));
-        a.setRespuesta(new Respuesta("3",false));
-        a.setRespuesta(new Respuesta("4",false));
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setSize(834, 454);
 
-        oControl = new ControllerAlumno();
+        try {
+            oControl = new ControllerAlumno();
+        } catch (ArchivoInvalidoExeption | CargarArchivoExption archivoInvalidoExeption) {
+            JOptionPane.showMessageDialog(MainFrame.this,
+                    archivoInvalidoExeption.getMessage(),
+                    "Archivo corrompido",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
 
-        int x = 0;
 
         pnlContador = new PanelContador();
-        panelInferior = new PanelInferior();
+        pnlInferior = new PanelInferior(oControl.noPreguntas());
+        respuestas = new ArrayList<>();
 
-        panelInferior.setListener(new PanelInferiorListener() {
+        Pregunta a = oControl.obtenerPregunta();
+        pnlPreguntas = new PanelPreguntas(a);
+        añadirListener();
+
+        pnlInferior.setListener(new PanelInferiorListener() {
             @Override
             public void btnSiguienteButtonClick() {
-                MainFrame.this.remove(pnlPreguntas);
-                pnlPreguntas = new PanelPreguntas(oControl.obtenerPregunta());
-                MainFrame.this.add(pnlPreguntas,BorderLayout.CENTER);
-                SwingUtilities.updateComponentTreeUI(MainFrame.this);
+                pnlInferior.refresh(oControl.noPreguntas());
+                Pregunta a = new Pregunta("","");
+                a = oControl.obtenerPregunta();
+
+
+                if (a != null){
+
+                    MainFrame.this.remove(pnlPreguntas);
+
+                    pnlPreguntas = new PanelPreguntas(a);
+                    añadirListener();
+
+                    respuestas.add(respuestaSeleccionada);
+
+                    MainFrame.this.add(pnlPreguntas, BorderLayout.CENTER);
+                    MainFrame.this.revalidate();
+                    MainFrame.this.repaint();
+
+                }else{
+
+                    respuestas.add(respuestaSeleccionada);
+                    for (int x:respuestas) {
+                        oControl.checar(x);
+                    }
+
+                    calificacionDialog = new CalificacionDialog(MainFrame.this,
+                            oControl.getCalificacion(),
+                            oControl.getRespuestasCorrectas()
+                    );
+                    listnerCalificacion();
+                    calificacionDialog.setVisible(true);
+                }
             }
         });
-        pnlPreguntas = new PanelPreguntas(oControl.obtenerPregunta());
-        System.out.println(oControl.noPreguntas());
-        super.add(pnlPreguntas, BorderLayout.CENTER);
+
+
         super.add(pnlContador, BorderLayout.NORTH);
-        super.add(panelInferior, BorderLayout.SOUTH);
-
+        super.add(pnlPreguntas, BorderLayout.CENTER);
+        super.add(pnlInferior, BorderLayout.SOUTH);
         super.setVisible(true);
+    }
 
+    public static void main(String[] args) {
+        new MainFrame();
+    }
+
+    public void añadirListener(){
+        pnlPreguntas.setListener(new PanelPreguntasActionListener() {
+            @Override
+            public void rbRespuesta1Click() {
+                respuestaSeleccionada = 0;
+            }
+
+            @Override
+            public void rbRespuesta2Click() {
+                respuestaSeleccionada = 1;
+            }
+
+            @Override
+            public void rbRespuesta3Click() {
+                respuestaSeleccionada = 2;
+            }
+
+            @Override
+            public void rbRespuesta4Click() {
+                respuestaSeleccionada = 3;
+            }
+        });
+    }
+
+    public void listnerCalificacion(){
+        calificacionDialog.setListener(new guiAlumnoListener() {
+            @Override
+            public void cerrarButtonCLick() {
+                salir();
+            }
+        });
+    }
+
+    public void salir(){
+        System.exit(0);
     }
 
 
-    public static void main(String[] args) throws ArchivoInvalidoExeption, CargarArchivoExption {
-       new MainFrame();
-
-    }
-
-    private void noPregunta(){
-
-    }
 }
+

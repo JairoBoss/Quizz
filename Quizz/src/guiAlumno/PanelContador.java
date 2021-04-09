@@ -10,7 +10,7 @@ public class PanelContador extends JPanel {
     public PanelContador(){
         lblContador = new JLabel("30:00");
         lblContador.setFont(new Font("Serif",Font.PLAIN,15));
-        this.setBackground(Color.CYAN);
+        this.setBackground(Color.WHITE);
 
         this.setBorder(new EmptyBorder(10,10,10,10));
         this.add(lblContador);

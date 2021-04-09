@@ -60,8 +60,8 @@ public class PrincipalFrame extends JFrame {
 
         modelPreguntas = new PreguntasTableModel(control);
         tblPreguntas = new JTable(modelPreguntas);
-        resizeColumnWidth(tblPreguntas);
-        tblPreguntas.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        /*resizeColumnWidth(tblPreguntas);
+        tblPreguntas.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);*/
         answer = new FiltrarComboBox(res);
         answer.setListener(new FiltrarComboBoxListener() {
             @Override
@@ -118,7 +118,9 @@ public class PrincipalFrame extends JFrame {
 
             @Override
             public void acercaDeButtonClick() {
-                System.out.println("Acerca de ....");
+                AcercaDeDialog a = new AcercaDeDialog(PrincipalFrame.this);
+                a.setVisible(true);
+                System.out.println(a.getSize());
             }
         });
 

@@ -1,5 +1,8 @@
 package guiAlumno;
 
+import exepciones.ArchivoInvalidoExeption;
+import exepciones.CargarArchivoExption;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -11,19 +14,20 @@ public class PanelInferior extends JPanel {
     private JLabel lblContador;
     private PanelInferiorListener listener;
 
-    public PanelInferior(){
+    public PanelInferior(int totaldePregntas){
         this.setLayout(new BorderLayout());
-        btnSiguientePreguntar = new JButton("Siguiente pregunta");
+        btnSiguientePreguntar = new JButton("Siguiente");
         btnSiguientePreguntar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 listener.btnSiguienteButtonClick();
             }
         });
-        lblContador = new JLabel("01 de 30");
 
-        this.setBackground(Color.GREEN);
+        lblContador = new JLabel("");
+        refresh(totaldePregntas);
 
+        this.setBackground(Color.WHITE);
         this.setBorder(new EmptyBorder(10,10,10,10));
 
         this.add(lblContador, BorderLayout.WEST);
@@ -33,5 +37,10 @@ public class PanelInferior extends JPanel {
 
     public void setListener(PanelInferiorListener listener) {
         this.listener = listener;
+    }
+    private Integer aux = 1;
+    public void refresh(int x){
+        lblContador.setText(aux + " de "+ x);
+        aux++;
     }
 }
